@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Les TEXHEBDO de Marina</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
+</head>
+
+<style>
+
+body {
+  background: url("image/irlandeplage.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 40px 20px;
+  margin: 0;
+  backdrop-filter: blur(2px);
+}
+
+.main-title {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 110px;
+  font-family: "League Gothic", sans-serif;
+  color: #111;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  transform: perspective(500px) rotateX(15deg);
+  letter-spacing: 3px;
+}
+
+
+
+
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.door {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.door:hover {
+  transform: scale(1.06);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.door-image {
+  width: 100%;
+  display: block;
+  transition: transform 0.6s ease;
+  transform-origin: left;
+}
+
+.door.open .door-image {
+  transform: rotateY(90deg);
+}
+
+.door-wrapper {
+  text-align: center;
+}
+
+.door-label {
+  margin-top: 40px;
+  font-size: 40px;
+  font-weight: 600;
+  color: #222;
+  font-family: "League Gothic", sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Animation secousse */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.door.shake {
+  animation: shake 0.3s ease;
+}
+
+@media (max-width: 700px) {
+  .main-title {
+    font-size: 55px;
+  }
+}
+
+</style>
+
+<body>
+
+  <h1 class="main-title">Les Texhebdos de Marina</h1>
+ 
+
+
+
+  <div class="calendar">
+
+    <!-- PORTE 1 : TEXHEBDO 2020 -->
+    <div class="door-wrapper">
+      <div class="door" id="door1">
+        <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
+      </div>
+      <p class="door-label"></p>
+    </div>
+
+    <!-- PORTE 2 -->
+    <div class="door-wrapper">
+      <div class="door" id="door2">
+        <img src="image/porte1991.jpg" class="door-image" alt="Texhebdo 1991">
+        </div>
+      <p class="door-label"></p>
+    </div>
+      
+
+    <!-- PORTE 3 -->
+    <div class="door-wrapper">
+      <div class="door" id="door3">
+        <img src="image/portebleue.jpg" class="door-image" alt="À venir">
+      </div>
+      <p class="door-label"></p>
+    </div>
+
+  </div>
+
+<script>
+
+/* --- PORTE 1 : TEXHEBDO 2020 --- */
+const door1 = document.getElementById('door1');
+
+
+door1.addEventListener('click', () => {
+
+  // Animation d’ouverture
+  door1.classList.add('open');
+
+  // Redirection immédiate
+  window.location.href = "texhebdo2020/texhebdo2020.html";
+
+});
+
+
+
+
+
+
+/* --- PORTE 2 : secousse --- */
+const door2 = document.getElementById('door2');
+
+door2.addEventListener('click', () => {
+  door2.classList.add('shake');
+  setTimeout(() => door2.classList.remove('shake'), 300);
+});
+
+
+/* --- PORTE 3 : secousse --- */
+const door3 = document.getElementById('door3');
+
+door3.addEventListener('click', () => {
+  door3.classList.add('shake');
+  setTimeout(() => door3.classList.remove('shake'), 300);
+});
+
+</script>
+
+</body>
+</html>
