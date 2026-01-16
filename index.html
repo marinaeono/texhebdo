@@ -120,37 +120,41 @@ body {
     Edition Eono - contact : marina.eono@wanadoo.fr
 </div>
 
-  <div class="calendar">
 
-    <!-- PORTE 1 : TEXHEBDO 2020 -->
-    <div class="door-wrapper">
-      <div class="door" id="door1">
-        <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
-      </div>
-      <p class="door-label"></p>
+
+<div class="calendar">
+
+  <!-- PORTE 1 : TEXHEBDO 1991 -->
+  <div class="door-wrapper">
+    <div class="door" id="door2">
+      <img src="image/porte1991.jpg" class="door-image" alt="Texhebdo 1991">
     </div>
-
-    <!-- PORTE 2 : TEXHEBDO 1991 -->
-    <div class="door-wrapper">
-      <div class="door" id="door2">
-        <img src="image/porte1991.jpg" class="door-image" alt="Texhebdo 1991">
-      </div>
-      <p class="door-label"></p>
-    </div>
-
-    <!-- PORTE 3 -->
-    <div class="door-wrapper">
-      <div class="door" id="door3">
-        <img src="image/portebleue.jpg" class="door-image" alt="À venir">
-      </div>
-      <p class="door-label"></p>
-    </div>
-
+    <p class="door-label">Texhebdo 1991</p>
   </div>
+
+  <!-- PORTE 2 : TEXHEBDO 2016 -->
+  <div class="door-wrapper">
+    <div class="door" id="door3">
+      <img src="image/porte2016.jpg" class="door-image" alt="Texhebdo 2016">
+    </div>
+    <p class="door-label">Texhebdo 2016</p>
+  </div>
+
+  <!-- PORTE 3 : TEXHEBDO 2020 -->
+  <div class="door-wrapper">
+    <div class="door" id="door1">
+      <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
+    </div>
+    <p class="door-label">Texhebdo 2020</p>
+  </div>
+
+</div>
+
+
 
 <script>
 
-/* --- PORTE 1 : TEXHEBDO 2020 --- */
+/* --- PORTE 1 : TEXHEBDO 1991  --- */
 const door1 = document.getElementById('door1');
 
 door1.addEventListener('click', () => {
@@ -158,7 +162,7 @@ door1.addEventListener('click', () => {
   window.location.href = "texhebdo2020/texhebdo2020.html";
 });
 
-/* --- PORTE 2 : TEXHEBDO 1991 --- */
+/* --- PORTE 2 : TEXHEBDO 2016 --- */
 const door2 = document.getElementById('door2');
 
 door2.addEventListener('click', () => {
@@ -166,7 +170,7 @@ door2.addEventListener('click', () => {
   window.location.href = "texhebdo1991/texhebdo1991.html";
 });
 
-/* --- PORTE 3 : secousse --- */
+/* --- PORTE 3 : TEXHEBDO 2020 --- */
 const door3 = document.getElementById('door3');
 
 door3.addEventListener('click', () => {
