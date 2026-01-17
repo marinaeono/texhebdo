@@ -6,261 +6,244 @@
   <title>Les TEXHEBDO de Marina</title>
 
   <link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
-</head>
-
-<style>
-
-.header {
-    position: relative;
-}
-
-body {
-  background: url("image/irlandeplage.jpg") no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  padding: 0;
-}
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
 
-/* Le logo passe derrière */
-.logo {
-  position: absolute;
-  top: 10px;      
-  left: 150px;    
-  height: 390px;
-  z-index: 1;     /* derrière le titre */
-}
+  <style>
 
-/* Le titre passe devant */
-.main-title {
-  display: inline-block;
-  text-align: left;   /* plus de centrage */
-  width: auto;        /* le titre prend juste la place du texte */
-  font-size: 110px;
-  font-family: "League Gothic", sans-serif;
-  color: #111;
+    /* --- RESET --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url("image/irlandeplage.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: "League Gothic", sans-serif;
+      color: #111;
+    }
+
+    /* --- HEADER RESPONSIVE --- */
+    .header {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .logo {
+      position: absolute;
+      top: 0;
+      left: 15%;
+      transform: translateX(-50%);
+      height: 380px;
+      opacity: 0.85;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .main-title {
+  font-size: clamp(40px, 8vw, 110px);
   text-shadow: 0 4px 10px rgba(0,0,0,0.6);
-  transform: perspective(500px) rotateX(15deg);
-  letter-spacing: 3px;
   position: relative;
-  left:380px;
   z-index: 10;
+  transform: perspective(500px) rotateX(15deg); /* effet 3D remis */
 }
 
-.subtitle {
-  position: absolute;
-  top: 180px;        /* place le texte sous le titre */
-  left: 390px;       /* même alignement horizontal que ton titre */
-  font-size: 50px;   /* plus petit que le titre */
-  font-family: "League Gothic", sans-serif;
-  color: #222;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  z-index: 10;       /* devant le logo */
+.special-h {
+  font-family: "Lobster", cursive;
+  font-size: 1.6em;
+  transform: perspective(500px) rotateY(10deg);
+  text-shadow: 0 4px 8px rgba(0,0,0,0.5);
 }
 
 
+
+
+    .subtitle {
+      font-size: clamp(18x, 4vw, 50px);
+      margin-top: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 10;
+    }
+
+   
 .footer-contact {
-    position: fixed;
-    top: 190px;        /* ajuste pour le placer sous ton titre */
-    right: 100px;       /* collé à droite */
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 18px;
-    color: #141414;
-    font-weight: 800;
-    z-index: 9999;
-}
-
-
-.mail-icon {
-    width: 60px;         /* icône plus grande */
-    height: auto;
-}
-
-.mail-link {
-    color: #fff;
-    text-decoration: none;
-    font-weight: 800;
-}
-
-.mail-link:hover {
-    text-decoration: underline;
-}
-
-
-
-
-.calendar {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* plus petit */
-  gap: 25px;
-  max-width: 900px; /* réduit la largeur totale */
-  margin: 0 auto;
-  margin-top: 100px;
-  background:transparent;
-}
-
-
-.door {
+  margin-top: -20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 28px;
+  font-weight: 800;
+  z-index: 10;
   position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  background: rgba(255, 255, 255, 0.5); /* transparence OK */
-  backdrop-filter: blur(3px);            /* effet verre dépoli */
+  background: none;        /* plus aucun rectangle */
+  backdrop-filter: none;   /* plus de verre dépoli */
+  border: none;            /* plus de contour */
+justify-content: flex-end;   /* aligne à droite */
+padding-right: 60px;         /* marge à droite */
 }
 
 
-.door:hover {
-  transform: scale(1.06);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
+    .mail-icon {
+      width: 70px;
+      height: auto;
+    }
 
-.door-image {
-  width: 100%;
-  display: block;
-  transition: transform 0.6s ease;
-  transform-origin: left;
-  }
-
-.door.open .door-image {
-  transform: rotateY(90deg);
-}
-
-.door-wrapper {
-  text-align: center;
-}
-
-.door-label {
-  margin-top: 10px;   /* réduit l’espace au-dessus */
-  font-size: 26px;    /* texte plus petit = rectangle plus fin */
-  font-weight: 600;
-  color: #222;
-  font-family: "League Gothic", sans-serif;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    .mail-link {
+  color: #111; /* lisible sur ton fond */
+  text-shadow: 0 2px 4px rgba(255,255,255,0.6); /* subtil, efficace */
+  text-decoration: none;
 }
 
 
+    .mail-link:hover {
+      text-decoration: underline;
+    }
 
-.label-box {
-  background: rgba(49, 130, 196, 0.8);
-  padding: 0px 10px;
-  border-radius: 10px;
-  margin-top: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  backdrop-filter: blur(3px);
-}
+    /* --- CALENDRIER RESPONSIVE --- */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0px auto;
+      padding: 0 20px;
+      margin-top: 10px;
+    }
 
+    .door {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(3px);
+    }
 
+    .door:hover {
+      transform: scale(1.06);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
 
+    .door-image {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+      transform-origin: left;
+    }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-4px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
-}
+    .door.open .door-image {
+      transform: rotateY(90deg);
+    }
 
-.door.shake {
-  animation: shake 0.3s ease;
-}
+    .door-wrapper {
+      text-align: center;
+    }
 
-@media (max-width: 700px) {
-  .main-title {
-    font-size: 55px;
-  }
-}
+    .label-box {
+      background: rgba(49, 130, 196, 0.8);
+      padding: 6px 12px;
+      border-radius: 10px;
+      margin-top: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      backdrop-filter: blur(3px);
+      display: inline-block;
+    }
 
-</style>
+    .door-label {
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+  </style>
+</head>
 
 <body>
 
-<div class="header">
-    
+  <div class="header">
+    <img src="image/logotous.png" class="logo">
 
-<h1 class="main-title">Les TEXHEBDOS de Marina</h1>
-<h2 class="subtitle">Site internet en construction</h1>
+    <h1 class="main-title">
+  Les TEX<span class="special-h">H</span>EBDOS de Marina
+</h1>
 
-<img src="image/logotous.png" class="logo">
-</div>
+    <h2 class="subtitle">Site internet en construction</h2>
 
- <div class="footer-contact">
-    <img src="image/icone.png" class="mail-icon">
-    <a href="mailto:marina.eono@wanadoo.fr" class="mail-link">
+    <div class="footer-contact">
+      <img src="image/icone.png" class="mail-icon">
+      <a href="mailto:marina.eono@wanadoo.fr" class="mail-link">
         marina.eono@wanadoo.fr
-    </a>
-</div>
+      </a>
+    </div>
 
 
 
-
-<div class="calendar">
-
-<!-- PORTE 1 : TEXHEBDO 1991 -->
-<div class="door-wrapper">
-  <div class="door" id="door1">
-    <img src="image/garde1991.jpg" class="door-image" alt="Texhebdo 1991">
   </div>
-  <div class="label-box">
-    <p class="door-label">1991 le numéro 1</p>
+
+  <div class="calendar">
+
+    <!-- PORTE 1 -->
+    <div class="door-wrapper">
+      <div class="door" id="door1">
+        <img src="image/garde1991.jpg" class="door-image" alt="Texhebdo 1991">
+      </div>
+      <div class="label-box">
+        <p class="door-label">1991 le numéro 1</p>
+      </div>
+    </div>
+
+    <!-- PORTE 2 -->
+    <div class="door-wrapper">
+      <div class="door" id="door2">
+        <img src="image/garde2016.jpg" class="door-image" alt="Texhebdo 2016">
+      </div>
+      <div class="label-box">
+        <p class="door-label">2016</p>
+      </div>
+    </div>
+
+    <!-- PORTE 3 -->
+    <div class="door-wrapper">
+      <div class="door" id="door3">
+        <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
+      </div>
+      <div class="label-box">
+        <p class="door-label">2020</p>
+      </div>
+    </div>
+
   </div>
-</div>
 
-<!-- PORTE 2 : TEXHEBDO 2016 -->
-<div class="door-wrapper">
-  <div class="door" id="door2">
-    <img src="image/garde2016.jpg" class="door-image" alt="Texhebdo 2016">
-  </div>
-  <div class="label-box">
-    <p class="door-label">2016</p>
-  </div>
-</div>
+  <script>
+    const door1 = document.getElementById('door1');
+    const door2 = document.getElementById('door2');
+    const door3 = document.getElementById('door3');
 
-<!-- PORTE 3 : TEXHEBDO 2020 -->
-<div class="door-wrapper">
-  <div class="door" id="door3">
-    <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
-  </div>
-  <div class="label-box">
-    <p class="door-label">2020</p>
-  </div>
-</div>
+    door1.addEventListener('click', () => {
+      door1.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo1991/texhebdo1991.html", 300);
+    });
 
+    door2.addEventListener('click', () => {
+      door2.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo2016/texhebdo2016.html", 300);
+    });
 
-
-<script>
-
-/* --- PORTE 1 : TEXHEBDO 1991  --- */
-const door1 = document.getElementById('door1');
-
-door1.addEventListener('click', () => {
-  door1.classList.add('open');
-  window.location.href = "texhebdo1991/texhebdo1991.html";
-});
-
-/* --- PORTE 2 : TEXHEBDO 2016 --- */
-const door2 = document.getElementById('door2');
-
-door2.addEventListener('click', () => {
-  door2.classList.add('open');
-  window.location.href = "texhebdo2016/texhebdo2016.html";
-});
-
-/* --- PORTE 3 : TEXHEBDO 2020 --- */
-const door3 = document.getElementById('door3');
-
-door3.addEventListener('click', () => {
-  door3.classList.add('open');
-  window.location.href = "texhebdo2020/texhebdo2020.html";
-});
-
-</script>
+    door3.addEventListener('click', () => {
+      door3.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo2020/texhebdo2020.html", 300);
+    });
+  </script>
 
 </body>
 </html>
