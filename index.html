@@ -28,9 +28,9 @@ body {
 .logo {
   position: absolute;
   top: 10px;      
-  left: 120px;    
-  height: 350px;
-  z-index: 10;     /* derrière le titre */
+  left: 150px;    
+  height: 390px;
+  z-index: 1;     /* derrière le titre */
 }
 
 /* Le titre passe devant */
@@ -46,14 +46,14 @@ body {
   letter-spacing: 3px;
   position: relative;
   left:380px;
-  z-index: 1;
+  z-index: 10;
 }
 
 .subtitle {
   position: absolute;
   top: 180px;        /* place le texte sous le titre */
   left: 390px;       /* même alignement horizontal que ton titre */
-  font-size: 32px;   /* plus petit que le titre */
+  font-size: 50px;   /* plus petit que le titre */
   font-family: "League Gothic", sans-serif;
   color: #222;
   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -63,15 +63,35 @@ body {
 
 .footer-contact {
     position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 26px;
-    color: #fff;
+    top: 190px;        /* ajuste pour le placer sous ton titre */
+    right: 20px;       /* collé à droite */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 18px;
+    color: #141414;
     font-weight: 800;
-    opacity: 1;
-    white-space: nowrap;
+    z-index: 9999;
 }
+
+
+.mail-icon {
+    width: 60px;         /* icône plus grande */
+    height: auto;
+}
+
+.mail-link {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+.mail-link:hover {
+    text-decoration: underline;
+}
+
+
+
 
 .calendar {
   display: grid;
@@ -117,14 +137,28 @@ body {
 }
 
 .door-label {
-  margin-top: 40px;
-  font-size: 40px;
+  margin-top: 10px;   /* réduit l’espace au-dessus */
+  font-size: 26px;    /* texte plus petit = rectangle plus fin */
   font-weight: 600;
   color: #222;
   font-family: "League Gothic", sans-serif;
   letter-spacing: 1px;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
+
+
+
+.label-box {
+  background: rgba(49, 130, 196, 0.8);
+  padding: 0px 10px;
+  border-radius: 10px;
+  margin-top: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(3px);
+}
+
+
+
 
 @keyframes shake {
   0% { transform: translateX(0); }
@@ -153,44 +187,57 @@ body {
     
 
 <h1 class="main-title">Les TEXHEBDOS de Marina</h1>
-<h2 class="subtitle">Site internet en cours de construction</h1>
+<h2 class="subtitle">Site internet en construction</h1>
 
-<img src="image/tous ensemble avec arriere planc.jpg" class="logo">
+<img src="image/logotous.png" class="logo">
 </div>
 
- 
-<div class="footer-contact">
-    Edition Eono - contact : marina.eono@wanadoo.fr
+ <div class="footer-contact">
+    <img src="image/icone.png" class="mail-icon">
+    <a href="mailto:marina.eono@wanadoo.fr" class="mail-link">
+        marina.eono@wanadoo.fr
+    </a>
 </div>
+
 
 
 
 <div class="calendar">
 
   <!-- PORTE 1 : TEXHEBDO 1991 -->
-  <div class="door-wrapper">
-    <div class="door" id="door1">
-      <img src="image/garde1991.jpg" class="door-image" alt="Texhebdo 1991">
-    </div>
-    <p class="door-label">Texhebdo 1991</p>
+<div class="door-wrapper">
+  <div class="door" id="door1">
+    <img src="image/garde1991.jpg" class="door-image" alt="Texhebdo 1991">
   </div>
+
+  <div class="label-box">
+    <p class="door-label">1991 le numéro 1</p>
+  </div>
+</div>
+
+  
 
   <!-- PORTE 2 : TEXHEBDO 2016 -->
-  <div class="door-wrapper">
-    <div class="door" id="door2">
-      <img src="image/garde2016.jpg" class="door-image" alt="Texhebdo 2016">
-    </div>
-    <p class="door-label">Texhebdo 2016</p>
+<div class="door-wrapper">
+  <div class="door" id="door1">
+    <img src="image/garde2016.jpg" class="door-image" alt="Texhebdo 1991">
   </div>
+
+  <div class="label-box">
+    <p class="door-label">2016</p>
+  </div>
+</div>
+
 
   <!-- PORTE 3 : TEXHEBDO 2020 -->
-  <div class="door-wrapper">
-    <div class="door" id="door3">
-      <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
-    </div>
-    <p class="door-label">Texhebdo 2020</p>
+<div class="door-wrapper">
+  <div class="door" id="door1">
+    <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 1991">
   </div>
 
+  <div class="label-box">
+    <p class="door-label">2020</p>
+  </div>
 </div>
 
 
@@ -225,5 +272,3 @@ door3.addEventListener('click', () => {
 
 </body>
 </html>
-
-
