@@ -66,24 +66,17 @@
     }
 
     /* --- RECTANGLE TRANSPARENT AUTOUR DE LA SCÈNE --- */
-   .scene-wrapper {
-  margin-top: -350px;
-  display: inline-block;
-
-  /* Dimensions du rectangle */
-  padding: 10px 60px;          /* moins haut, plus long */
-  border-radius: 18px;
-
-  /* Transparence premium */
-  background: rgba(255, 255, 255, 0.15); /* plus transparent */
-  backdrop-filter: blur(4px);            /* verre dépoli léger */
-  box-shadow: 0 2px 12px rgba(0,0,0,0.20);
-
-  /* Taille globale */
-  transform: scale(1.2);
-  transform-origin: top center;
-}
-
+    .scene-wrapper {
+      margin-top: -350px;
+      display: inline-block;
+      padding: 10px 60px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.20);
+      transform: scale(1.2);
+      transform-origin: top center;
+    }
 
     /* --- MINI SCÈNE --- */
     .scene {
@@ -121,149 +114,6 @@
       width: 12px;
       height: 12px;
       background: radial-gradient(circle, rgba(255,200,120,0.7), transparent);
-      border-radius: 50%;
-      animation: dust 0.6s ease-out infinite;
-    }
-
-    .sandpile {
-      position: absolute;
-      bottom: 6px;
-      right: 40px;
-      width: 40px;
-      height: 20px;
-      background: #e2b36a;
-      border-radius: 50% 50% 0 0;
-      animation: shrink 4s ease-in-out infinite;
-    }
-
-    .sign {
-      position: absolute;
-      bottom: 30px;
-      right: 0;
-      transform: rotate(-3deg);
-      animation: pop 4s ease-in-out infinite;
-    }
-
-    .sign span {
-      background: #ffcc66;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: 700;
-      color: #5a3a00;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    @keyframes move {
-      0% { transform: translateX(0); }
-      40% { transform: translateX(180px); }
-      60% { transform: translateX(180px); }
-      100% { transform: translateX(0); }
-    }
-
-    @keyframes dust {
-      0% { opacity: 0.8; transform: scale(1) translateY(0); }
-      100% { opacity: 0; transform: scale(1.8) translateY(-8px); }
-    }
-
-    @keyframes shrink {
-      0% { transform: scaleY(1); }
-      40% { transform: scaleY(0.4); }
-      60% { transform: scaleY(0.4); }
-      100% { transform: scaleY(1); }
-    }
-
-    @keyframes pop {
-      0% { transform: scale(0) rotate(-3deg); opacity: 0; }
-      40% { transform: scale(1) rotate(-3deg); opacity: 1; }
-      60% { transform: scale(1) rotate(-3deg); opacity: 1; }
-      100% { transform: scale(0) rotate(-3deg); opacity: 0; }
-    }
-
-    /* --- CONTACT --- */
-    .footer-contact {
-      margin-top: -20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 28px;
-      font-weight: 800;
-      z-index: 10;
-      position: relative;
-      justify-content: flex-end;
-      padding-right: 60px;
-    }
-
-    .mail-icon {
-      width: 70px;
-      height: auto;
-    }
-
-    .mail-link {
-      color: #111;
-      text-shadow: 0 2px 4px rgba(255,255,255,0.6);
-      text-decoration: none;
-    }
-
-    .mail-link:hover {
-      text-decoration: underline;
-    }
-
-    /* --- CALENDRIER --- */
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0px auto;
-      padding: 0 20px;
-      margin-top: 10px;
-    }
-
-    .door {
-      position: relative;
-      cursor: pointer;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(3px);
-    }
-
-    .door:hover {
-      transform: scale(1.06);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-    }
-
-    .door-image {
-      width: 100%;
-      display: block;
-      transition: transform 0.6s ease;
-      transform-origin: left;
-    }
-
-    .door.open .door-image {
-      transform: rotateY(90deg);
-    }
-
-    .door-wrapper {
-      text-align: center;
-    }
-
-    .label-box {
-      background: rgba(49, 130, 196, 0.8);
-      padding: 6px 12px;
-      border-radius: 10px;
-      margin-top: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-      backdrop-filter: blur(3px);
-      display: inline-block;
-    }
-
-    .door-label {
-      font-size: 28px;
-      letter-spacing: 1px;
-      color: #fff;
     }
 
   </style>
@@ -271,32 +121,32 @@
 
 <body>
 
+  <!-- HEADER -->
   <div class="header">
-    <img src="image/logotous.png" class="logo">
-
-    <h1 class="main-title">
-      Les TEX<span class="special-h">H</span>EBDOS de Marina
-    </h1>
-
-    <!-- RECTANGLE TRANSPARENT + SCÈNE -->
-    <div class="scene-wrapper">
-      <div class="scene">
-
-        <div class="ground"></div>
-
-        <div class="wheelbarrow">
-          <img src="image/brouette.png" alt="brouette">
-          <div class="dust"></div>
-        </div>
-
-        <div class="sandpile"></div>
-
-        <div class="sign">
-          <span>Site en construction</span>
-        </div>
-
+    <h1 class="main-title">Les <span class="special-h">TEXHEBDO</span> de Marina</h1>
   </div>
 
+  <!-- RECTANGLE TRANSPARENT + SCÈNE -->
+  <div class="scene-wrapper">
+    <div class="scene">
+
+      <div class="ground"></div>
+
+      <div class="wheelbarrow">
+        <img src="image/brouette.png" alt="brouette">
+        <div class="dust"></div>
+      </div>
+
+      <div class="sandpile"></div>
+
+      <div class="sign">
+        <span>Site en construction</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CALENDRIER -->
   <div class="calendar">
 
     <div class="door-wrapper">
@@ -351,4 +201,3 @@
 
 </body>
 </html>
-
