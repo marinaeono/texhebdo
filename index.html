@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Les TEXHEBDO de Marina</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+  <style>
+    /* --- RESET --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url("image/irlandeplage.jpg") no-repeat center center fixed;
+      background-size: cover;
+      font-family: "League Gothic", sans-serif;
+      color: #111;
+    }
+
+    /* --- HEADER RESPONSIVE --- */
+    .header {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      padding-top: 40px;
+      padding-bottom: 20px;
+    }
+
+    .logo {
+      position: absolute;
+      top: 0;
+      left: 15%;
+      transform: translateX(-50%);
+      height: 380px;          /* taille d’origine */
+      opacity: 0.85;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .main-title {
+      font-size: clamp(40px, 8vw, 110px);
+      text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 10;
+      transform: perspective(500px) rotateX(15deg);
+    }
+
+    .special-h {
+      font-family: "Lobster", cursive;
+      font-size: 1.6em;
+      transform: perspective(500px) rotateY(10deg);
+      text-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    /* --- RECTANGLE TRANSPARENT + SCÈNE --- */
+    .scene-wrapper {
+      margin-top: 15px;                 /* juste sous le titre */
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;              /* centre la scène dans le rectangle */
+
+      padding: 20px 70px;               /* hauteur + largeur du rectangle */
+      border-radius: 18px;
+
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.20);
+
+      transform: scale(1.15);
+      transform-origin: top center;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* --- MINI SCÈNE --- */
+    .scene {
+      position: relative;
+      width: 280px;
+      height: 95px;                    /* un peu moins haut → brouette plus visible */
+    }
+
+    .ground {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 6px;
+      background: #c28b47;
+      border-radius: 3px;
+    }
+
+    .wheelbarrow {
+      position: absolute;
+      bottom: 25px;                     /* remonte la brouette */
+      left: -40px;
+      animation: move 4s ease-in-out infinite;
+    }
+
+    .wheelbarrow img {
+      width: 60px;
+    }
+
+    .dust {
+      position: absolute;
+      bottom: 0;
+      left: 5px;
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle, rgba(255,200,120,0.7), transparent);
+      border-radius: 50%;
+      animation: dust 0.6s ease-out infinite;
+    }
+
+    .sandpile {
+      position: absolute;
+      bottom: 25px;                     /* remonte le tas de sable */
+      right: 40px;
+      width: 40px;
+      height: 20px;
+      background: #e2b36a;
+      border-radius: 50% 50% 0 0;
+      animation: shrink 4s ease-in-out infinite;
+    }
+
+    .sign {
+      position: absolute;
+      bottom: 48px;                     /* remonte un peu le panneau */
+      right: 0;
+      transform: rotate(-3deg);
+      animation: pop 4s ease-in-out infinite;
+    }
+
+    .sign span {
+      background: #ffcc66;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-weight: 700;
+      color: #5a3a00;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    @keyframes move {
+      0% { transform: translateX(0); }
+      40% { transform: translateX(180px); }
+      60% { transform: translateX(180px); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes dust {
+      0% { opacity: 0.8; transform: scale(1) translateY(0); }
+      100% { opacity: 0; transform: scale(1.8) translateY(-8px); }
+    }
+
+    @keyframes shrink {
+      0% { transform: scaleY(1); }
+      40% { transform: scaleY(0.4); }
+      60% { transform: scaleY(0.4); }
+      100% { transform: scaleY(1); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0) rotate(-3deg); opacity: 0; }
+      40% { transform: scale(1) rotate(-3deg); opacity: 1; }
+      60% { transform: scale(1) rotate(-3deg); opacity: 1; }
+      100% { transform: scale(0) rotate(-3deg); opacity: 0; }
+    }
+
+    /* --- CALENDRIER --- */
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .door {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(3px);
+    }
+
+    .door:hover {
+      transform: scale(1.06);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+    }
+
+    .door-image {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+      transform-origin: left;
+    }
+
+    .door.open .door-image {
+      transform: rotateY(90deg);
+    }
+
+    .door-wrapper {
+      text-align: center;
+    }
+
+    .label-box {
+      background: rgba(49, 130, 196, 0.8);
+      padding: 6px 12px;
+      border-radius: 10px;
+      margin-top: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      backdrop-filter: blur(3px);
+      display: inline-block;
+    }
+
+    .door-label {
+      font-size: 28px;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="image/logotous.png" class="logo">
+
+    <h1 class="main-title">
+      Les TEX<span class="special-h">H</span>EBDOS de Marina
+    </h1>
+
+    <!-- RECTANGLE TRANSPARENT + SCÈNE -->
+    <div class="scene-wrapper">
+      <div class="scene">
+        <div class="ground"></div>
+
+        <div class="wheelbarrow">
+          <img src="image/brouette.png" alt="brouette">
+          <div class="dust"></div>
+        </div>
+
+        <div class="sandpile"></div>
+
+        <div class="sign">
+          <span>Site en construction</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar">
+
+    <div class="door-wrapper">
+      <div class="door" id="door1">
+        <img src="image/garde1991.jpg" class="door-image" alt="Texhebdo 1991">
+      </div>
+      <div class="label-box">
+        <p class="door-label">1991 le numéro 1</p>
+      </div>
+    </div>
+
+    <div class="door-wrapper">
+      <div class="door" id="door2">
+        <img src="image/garde2016.jpg" class="door-image" alt="Texhebdo 2016">
+      </div>
+      <div class="label-box">
+        <p class="door-label">2016</p>
+      </div>
+    </div>
+
+    <div class="door-wrapper">
+      <div class="door" id="door3">
+        <img src="image/garde2020.jpeg" class="door-image" alt="Texhebdo 2020">
+      </div>
+      <div class="label-box">
+        <p class="door-label">2020</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const door1 = document.getElementById('door1');
+    const door2 = document.getElementById('door2');
+    const door3 = document.getElementById('door3');
+
+    door1.addEventListener('click', () => {
+      door1.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo1991/texhebdo1991.html", 300);
+    });
+
+    door2.addEventListener('click', () => {
+      door2.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo2016/texhebdo2016.html", 300);
+    });
+
+    door3.addEventListener('click', () => {
+      door3.classList.add('open');
+      setTimeout(() => window.location.href = "texhebdo2020/texhebdo2020.html", 300);
+    });
+  </script>
+
+</body>
+</html>
