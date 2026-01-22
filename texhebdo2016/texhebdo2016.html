@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Magazine TEXHEBDO 1991</title>
+
+<style>
+
+.retour-accueil-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 150px;
+  height: 50px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: black !important;
+  text-decoration: none !important;
+  z-index: 999999999 !important;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  background: url("../image/irlandeplage.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  padding: 40px 20px;
+  backdrop-filter: blur(2px);
+}
+
+/* POSITION DU LIVRE */
+.book {
+  width: 800px;
+  height: 550px;
+  position: relative;
+  perspective: 2000px;
+  transform: scale(1.6) translateX(-40px);
+  transform-origin: center;
+}
+
+/* DOUBLE PAGE */
+.spread {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  width: 350px;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* PAGE FANTÔME */
+.ghostPage {
+  position: absolute;
+  width: 350px;
+  height: 500px;
+  left: 400px;
+  top: 25px;
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ghostPage .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0,0,0,0.25), transparent);
+  opacity: 0;
+}
+
+/* ANIMATIONS DE PAGE */
+.turningGhost {
+  animation: turnPage 0.8s ease forwards;
+}
+
+@keyframes turnPage {
+  0%   { transform: rotateY(0deg) scale(1); opacity: 1; }
+  40%  { transform: rotateY(-60deg) scale(0.98); }
+  70%  { transform: rotateY(-110deg) scale(0.96); }
+  100% { transform: rotateY(-180deg) scale(0.95); opacity: 0; }
+}
+
+.turningGhostReverse {
+  animation: turnPageReverse 0.8s ease forwards;
+}
+
+@keyframes turnPageReverse {
+  0%   { transform: rotateY(-180deg) scale(0.95); opacity: 1; }
+  40%  { transform: rotateY(-110deg) scale(0.96); }
+  70%  { transform: rotateY(-60deg) scale(0.98); }
+  100% { transform: rotateY(0deg) scale(1); opacity: 0; }
+}
+
+/* ANIMATION OUVERTURE COUVERTURE */
+.coverOpening {
+  animation: openCover 1s ease forwards;
+}
+
+@keyframes openCover {
+  0%   { transform: rotateY(0deg) scale(1); opacity: 1; }
+  40%  { transform: rotateY(-60deg) scale(0.98); }
+  70%  { transform: rotateY(-120deg) scale(0.97); }
+  100% { transform: rotateY(-180deg) scale(0.95); opacity: 0; }
+}
+
+/* ANIMATION FERMETURE COUVERTURE */
+.coverClosing {
+  animation: closeCover 1s ease forwards;
+}
+
+@keyframes closeCover {
+  0%   { transform: rotateY(-180deg) scale(0.95); opacity: 1; }
+  40%  { transform: rotateY(-120deg) scale(0.97); }
+  70%  { transform: rotateY(-60deg) scale(0.98); }
+  100% { transform: rotateY(0deg) scale(1); opacity: 0; }
+}
+
+/* BUFFER INVISIBLE */
+.buffer {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="retour-accueil-icon">Retour accueil</a>
+
+<audio id="musique" src="../son/libredroit.mp3"></audio>
+<script>
+window.addEventListener("load", () => {
+    document.getElementById("musique").play();
+});
+</script>
+
+<div class="book">
+
+  <div class="spread" id="spread">
+    <div class="page left" id="leftPage"></div>
+    <div class="page right" id="rightPage"></div>
+  </div>
+
+  <div class="ghostPage" id="ghostPage">
+    <div class="shadow"></div>
+  </div>
+
+  <div class="buffer" id="buffer"></div>
+
+</div>
+
+<script>
+/* --- COUVERTURE --- */
+const cover = "pages/nov2016couverture.jpg";
+
+/* --- PAGES INTERNES --- */
+const pages = [
+  "pages/nov2016page2.jpg",
+  "pages/nov2016page3.jpg",
+  "pages/nov2016page4.jpg",
+  "pages/nov2016page5.png",
+ 
+  
+
+];
+
+/* SPREADS (double-pages) */
+const spreads = [];
+for (let i = 0; i < pages.length; i += 2) {
+  if (pages[i + 1]) spreads.push([pages[i], pages[i + 1]]);
+}
+
+/* PRÉCHARGEMENT */
+[cover, ...pages].forEach(src => { const img = new Image(); img.src = src; });
+
+/* ÉLÉMENTS */
+let currentSpread = 0; // LIVRE FERMÉ AU DÉMARRAGE
+
+const spread = document.getElementById("spread");
+const leftPage = document.getElementById("leftPage");
+const rightPage = document.getElementById("rightPage");
+const ghost = document.getElementById("ghostPage");
+const ghostShadow = ghost.querySelector(".shadow");
+const buffer = document.getElementById("buffer");
+
+/* AFFICHAGE DES PAGES */
+function showSpread(index) {
+
+  // LIVRE FERMÉ
+  if (index === 0) {
+    leftPage.style.backgroundImage = "none";
+    rightPage.style.backgroundImage = `url(${cover})`;
+    return;
+  }
+
+  // LIVRE OUVERT
+  const spreadData = spreads[index - 1];
+  leftPage.style.backgroundImage = `url(${spreadData[0]})`;
+  rightPage.style.backgroundImage = `url(${spreadData[1]})`;
+}
+
+showSpread(0);
+
+/* ANIMATION OUVERTURE */
+function playCoverOpening() {
+  ghost.style.backgroundImage = `url(${cover})`;
+  ghost.style.opacity = 1;
+  ghost.classList.add("coverOpening");
+
+  setTimeout(() => {
+    ghost.classList.remove("coverOpening");
+    ghost.style.opacity = 0;
+  }, 1000);
+}
+
+/* ANIMATION FERMETURE */
+function playCoverClosing() {
+  ghost.style.backgroundImage = rightPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+  ghost.classList.add("coverClosing");
+
+  setTimeout(() => {
+    ghost.classList.remove("coverClosing");
+    ghost.style.opacity = 0;
+  }, 1000);
+}
+
+/* PRÉCHARGEMENT DE LA PAGE SUIVANTE */
+function prerenderSpread(index) {
+  if (index >= 1 && index <= spreads.length) {
+    const nextSpread = spreads[index - 1];
+    buffer.style.backgroundImage = `url(${nextSpread[1]})`;
+  }
+}
+
+prerenderSpread(1);
+
+/* AVANCER */
+rightPage.addEventListener("click", () => {
+
+  // OUVERTURE DE LA COUVERTURE
+  if (currentSpread === 0) {
+    playCoverOpening();
+    setTimeout(() => {
+      currentSpread = 1;
+      showSpread(1);
+      prerenderSpread(2);
+    }, 500);
+    return;
+  }
+
+  // FERMETURE DU LIVRE (dernière page)
+  if (currentSpread === spreads.length) {
+    playCoverClosing();
+    setTimeout(() => {
+      currentSpread = 0;
+      showSpread(0);
+    }, 500);
+    return;
+  }
+
+  // PAGE SUIVANTE
+  ghost.style.backgroundImage = rightPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+
+  ghost.classList.add("turningGhost");
+  ghostShadow.classList.add("shadowActive");
+
+  setTimeout(() => {
+    currentSpread++;
+    showSpread(currentSpread);
+    prerenderSpread(currentSpread + 1);
+  }, 400);
+
+  setTimeout(() => {
+    ghost.classList.remove("turningGhost");
+    ghostShadow.classList.remove("shadowActive");
+    ghost.style.opacity = 0;
+  }, 800);
+});
+
+/* RECULER */
+leftPage.addEventListener("click", () => {
+
+  // RETOUR À LA COUVERTURE
+  if (currentSpread === 1) {
+    playCoverClosing();
+    setTimeout(() => {
+      currentSpread = 0;
+      showSpread(0);
+    }, 500);
+    return;
+  }
+
+  if (currentSpread === 0) return;
+
+  ghost.style.backgroundImage = leftPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+
+  ghost.classList.add("turningGhostReverse");
+  ghostShadow.classList.add("shadowActive");
+
+  setTimeout(() => {
+    currentSpread--;
+    showSpread(currentSpread);
+    prerenderSpread(currentSpread - 1);
+  }, 400);
+
+  setTimeout(() => {
+    ghost.classList.remove("turningGhostReverse");
+    ghostShadow.classList.remove("shadowActive");
+    ghost.style.opacity = 0;
+  }, 800);
+});
+</script>
+
+</body>
+</html>
