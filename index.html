@@ -1,0 +1,23 @@
+><!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Accès protégé</title>
+  <script>
+    function login() {
+      const pwd = document.getElementById("pwd").value;
+      if (pwd === "sos") {
+        window.location = "sitetexhebdo.html"; // ta vraie page
+      } else {
+        alert("Mot de passe incorrect");
+      }
+    }
+  </script>
+</head>
+<body>
+  <h2>taper le mot de passe</h2>
+  <input type="password" id="pwd">
+  <button onclick="login()">Entrer</button>
+</body>
+</html>
+
