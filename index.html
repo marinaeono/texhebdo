@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Texhebdo – Maître Bêêêh</title>
+
+    <style>
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #7ED957; /* fond vert */
+    padding: 40px;
+    text-align: center;
+}
+
+#container {
+    background: #7ED957; /* même vert que le fond */
+    padding: 30px;
+    border-radius: 10px;
+    width: 350px;
+    margin: auto;
+}
+
+
+        #message {
+            margin-top: 20px;
+            font-style: italic;
+            color: #444;
+        }
+
+        #beeh {
+            width: 200px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- Image de la chèvre -->
+    <img src="image/chevre/chevrebete.png" id="beeh" alt="maitre beeeh">
+
+    <h2>Bienvenue sur Texhebdo</h2>
+    <p>La chèvre te surveille </p>
+
+    <input type="password" id="password" placeholder="Mot de passe">
+    <br><br>
+    <button onclick="verifierMotDePasse()">Valider</button>
+
+    <p id="message"></p>
+</div>
+
+<script>
+let erreurs = 0;
+
+// Messages affichés selon le nombre d'erreurs
+const messages = [
+    "Bêêh… non. Mais joli début.",
+    "Toujours pas. La chèvre fronce les sourcils.",
+    "La chèvre éclate de rire. Elle se moque de toi.",
+    "Hmm. La chèvre commence à douter de toi.",
+    "La chèvre te fixe. Longuement. Très longuement."
+];
+
+// Images correspondantes
+const images = [
+    "image/chevre/chevregrogne.png",
+    "image/chevre/chevrerigole.png",
+    "image/chevre/chevrelangue.png",
+    "image/chevre/chevresourcil.png",
+    "image/chevre/chevrelangue.png",
+];
+
+
+function verifierMotDePasse() {
+    const input = document.getElementById("password").value;
+    const vraiMotDePasse = "sos";
+    const zoneMessage = document.getElementById("message");
+    const imageBeeh = document.getElementById("beeh");
+    const sonBeeh = document.getElementById("sonBeeh");
+
+    // Joue le son à chaque clic
+    if (sonBeeh) {
+        sonBeeh.pause();          // stoppe le son s’il est déjà en cours
+        sonBeeh.currentTime = 0;  // remet au début
+        sonBeeh.play().catch(() => {}); // évite les erreurs si bloqué
+    }
+
+    // Mot de passe correct
+    if (input === vraiMotDePasse) {
+        zoneMessage.textContent = "Accès accordé ! Maître Bêêêh est impressionné.";
+        imageBeeh.src = "image/chevre/chevrebete.png";
+        erreurs = 0;
+        return;
+    }
+
+    // Mot de passe incorrect
+    const index = erreurs % images.length;
+    zoneMessage.textContent = messages[index];
+    imageBeeh.src = images[index];
+    erreurs++;
+}
+
+
+
+</script>
+<audio id="sonBeeh" src="son/bee.mp3"></audio>
+
+</body>
+</html>
