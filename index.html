@@ -178,6 +178,28 @@ function verifierMotDePasse() {
         return;
     }
 
+
+    // Empêche de dépasser la dernière image
+    const index = Math.min(erreurs, images.length - 1);
+
+    zoneMessage.textContent = messages[index] || "Toujours pas !";
+    chevreTete.src = images[index];
+
+    erreurs++;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // Mot de passe incorrect
     const index = erreurs % images.length;
     zoneMessage.textContent = messages[index];
@@ -212,6 +234,7 @@ document.getElementById("toggleMdp").addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
