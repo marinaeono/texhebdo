@@ -5,11 +5,9 @@
     <title>Texhebdo – Maître Bêêêh</title>
 
     <style>
-
-
 body {
     font-family: Arial, sans-serif;
-    background: #7ED957; /* fond vert */
+    background: #7ED957;
     padding: 40px;
     text-align: center;
     padding-top: 200px;
@@ -22,55 +20,49 @@ body {
     background: white;
     border-radius: 10px;
     margin: 0 auto;
-    margin-top: 160px; /* ajuste selon la hauteur de la tête */
-    z-index: 5; /* le container passe devant la tête */
+    margin-top: 160px;
+    z-index: 5;
 }
 
-/* Tête derrière le container */
 #chevreTete {
     position: absolute;
-    top: 180px; /* ajuste pour coller au bord */
+    top: 180px;
     left: 50%;
     transform: translateX(-50%);
     width: 180px;
-    z-index: 1; /* derrière */
+    z-index: 1;
     pointer-events: none;
 }
 
-/* Sabots devant le container */
 #sabots {
     position: absolute;
-    top: -35px; /* juste au-dessus du bord */
+    top: -35px;
     left: 50%;
     transform: translateX(-50%);
     width: 120px;
-    z-index: 10; /* devant */
+    z-index: 10;
     pointer-events: none;
 }
 
-
-
 #message {
-    font-size: 20px;   /* augmente la taille du texte */
-    font-weight: bold; /* optionnel : pour le rendre plus visible */
+    font-size: 20px;
+    font-weight: bold;
     margin-top: 20px;
     font-style: italic;
 }
 
 #beeh {
-            width: 200px;
-            margin-bottom: 20px;
-            display:none
-        }
+    width: 200px;
+    margin-bottom: 20px;
+    display:none;
+}
 
 #password {
     font-size: 1.3em;
-    padding: 15px 45px 15px 15px; /* ↑ augmente la hauteur */
-    height: 45px; /* optionnel : force une hauteur minimale */
+    padding: 15px 45px 15px 15px;
+    height: 45px;
 }
 
-
-/* Désactive l’icône automatique sur Chrome / Edge */
 input::-ms-reveal,
 input::-ms-clear {
     display: none;
@@ -83,28 +75,17 @@ input[type="password"]::-webkit-textfield-decoration-container {
 input[type="password"] {
     -webkit-text-security: disc;
 }
-
-
-
-
     </style>
 </head>
 
 <body>
 
-
-
 <img id="chevreTete" src="image/chevre/tete.png" alt="tête de Maître Bêêêh">
-
-
-
-
 
 <div id="container">
     <img id="sabots" src="image/chevre/sabots.png" alt="sabots">
     
     <h2>Bienvenue sur le site TEXHEBDO</h2>
-   
 
     <img src="image/chevre/chevrebete.png" id="beeh" alt="maitre beeeh">
 
@@ -127,15 +108,13 @@ input[type="password"] {
 <script>
 let erreurs = 0;
 
-// Messages affichés selon le nombre d'erreurs
+// Messages normaux (avant blocage)
 const messages = [
     "Bêêh… non.",
     "Toujours pas.",
     "La chèvre se moque de toi !",
     "Hmm. La chèvre est fachée",
-    "Encore le mauvais mot de passe !",
-    "Bon. Il faut abandonner ! Tu ne trouveras pas le mot de passe",
-    "Pas bon !",
+    "Encore le mauvais mot de passe !"
 ];
 
 // Images correspondantes
@@ -144,10 +123,7 @@ const images = [
     "image/chevre/chevresourcil.png",
     "image/chevre/chevrerigole.png",
     "image/chevre/chevregrogne.png",
-    "image/chevre/chevrelangue.png",
-    "image/chevre/chevremoqueuse.png",
-    "image/chevre/chevreenervee.png",
-
+    "image/chevre/chevrelangue.png"
 ];
 
 function verifierMotDePasse() {
@@ -157,7 +133,7 @@ function verifierMotDePasse() {
     const chevreTete = document.getElementById("chevreTete");
     const sonBeeh = document.getElementById("sonBeeh");
 
-    // Joue le son à chaque clic
+    // Son
     if (sonBeeh) {
         sonBeeh.pause();
         sonBeeh.currentTime = 0;
@@ -177,12 +153,16 @@ function verifierMotDePasse() {
         return;
     }
 
+    // À partir de la 6ᵉ erreur → blocage
+    if (erreurs >= 5) {
+        zoneMessage.textContent = "Il faut tout abandonner !";
+        chevreTete.src = "image/chevre/chevreenervee.png"; // image fâchée
+        return;
+    }
 
-    // Empêche de dépasser la dernière image
-    const index = Math.min(erreurs, images.length - 1);
-
-    zoneMessage.textContent = messages[index] || "Toujours pas !";
-    chevreTete.src = images[index];
+    // Sinon : comportement normal
+    zoneMessage.textContent = messages[erreurs] || "Toujours pas !";
+    chevreTete.src = images[erreurs] || "image/chevre/chevrebete.png";
 
     erreurs++;
 }
@@ -208,12 +188,12 @@ document.getElementById("toggleMdp").addEventListener("click", function () {
 });
 </script>
 
-
-
 <audio id="sonBeeh" src="son/bee.mp3"></audio>
 
 </body>
 </html>
+
+
 
 
 
