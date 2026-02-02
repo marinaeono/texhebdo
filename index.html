@@ -188,25 +188,6 @@ function verifierMotDePasse() {
     erreurs++;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-    
-    // Mot de passe incorrect
-    const index = erreurs % images.length;
-    zoneMessage.textContent = messages[index];
-    chevreTete.src = images[index];
-    erreurs++;
-}
-
 // Valider avec Entrée
 document.getElementById("password").addEventListener("keydown", function(e) {
     if (e.key === "Enter") {
@@ -234,6 +215,7 @@ document.getElementById("toggleMdp").addEventListener("click", function () {
 
 </body>
 </html>
+
 
 
 
