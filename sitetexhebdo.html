@@ -37,11 +37,13 @@
     .header-flex {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
       gap: 20px;
+      position:relative;
+      
     }
 
     .main-title {
@@ -100,10 +102,11 @@
     .carousel-small {
       width: 200px;
       height: 200px;
-      position: relative;
+      position: absolute;
       perspective: 1200px;
       margin-top: -15px;
       margin-left: 30px;
+      right:0;
     }
 
     .carousel-small .carrousel {
@@ -690,6 +693,7 @@ leftBtn.addEventListener('click', () => scrollToPage(-1));
 
 
 </html>
+
 
 
 
