@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Texhebdo – Maître Bêêêh</title>
+
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    padding: 40px;
+    text-align: center;
+    padding-top: 200px;
+
+    background-image: url("image/champs.jpg");
+    background-size: cover;        /* L’image couvre tout l’écran */
+    background-repeat: no-repeat;  /* Pas de répétition */
+    background-position: center;   /* Centrée */
+}
+
+#container {
+    position: relative;
+    width: 400px;
+    padding: 30px;
+    background: rgb(202, 224, 9);
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 160px;
+    z-index: 5;
+}
+
+#chevreTete {
+    position: absolute;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+#sabots {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+#message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+#beeh {
+    width: 200px;
+    margin-bottom: 20px;
+    display:none;
+}
+
+#password {
+    font-size: 1.3em;
+    padding: 15px 45px 15px 15px;
+    height: 45px;
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+}
+
+input[type="password"] {
+    -webkit-text-security: disc;
+}
+
+#videoChevre {
+    position: absolute;
+    top: 185px;        /* hauteur */
+    left: 50%;         /* plus grand = plus à droite */
+    transform: translateX(-50%);
+    width: 500px;
+    display: none;
+    z-index: 20;
+}
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+<img id="chevreTete" src="image/chevre/tete.png" alt="tête de Maître Bêêêh">
+
+<div id="container">
+    <img id="sabots" src="image/chevre/sabots.png" alt="sabots">
+    
+    <h2>Bienvenue sur le site TEXHEBDO</h2>
+
+    <img src="image/chevre/chevrebete.png" id="beeh" alt="maitre beeeh">
+
+    <p>Saisir le mot de passe</p>
+
+    <div style="position: relative; display: inline-block;">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <span id="toggleMdp" 
+              style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); cursor: pointer;font-size: 50px;">
+            👁️
+        </span>
+    </div>
+
+    <p style="font-size: 14px; margin-top: 5px; color: #555;"> Pour afficher le mot de passe, cliquer sur l’œil. </p>
+
+
+    
+    <br><br>
+    <button onclick="verifierMotDePasse()">Valider</button>
+
+    <p id="message"></p>
+</div>
+
+<script>
+let erreurs = 0;
+
+// Messages normaux (avant blocage)
+const messages = [
+    "Bêêh… non.",
+    "Toujours pas.",
+    "La chèvre se moque de toi !",
+    "Hmm. La chèvre est fachée",
+    "Encore le mauvais mot de passe !"
+];
+
+// Images correspondantes
+const images = [
+    "image/chevre/chevrebete.png",
+    "image/chevre/chevresourcil.png",
+    "image/chevre/chevrerigole.png",
+    "image/chevre/chevregrogne.png",
+    "image/chevre/chevrelangue.png"
+];
+
+function verifierMotDePasse() {
+    const input = document.getElementById("password").value;
+
+    // Mot de passe encodé et fragmenté
+    const part1 = "YmVl";
+    const part2 = "aA==";
+    const vraiMotDePasse = atob(part1 + part2);
+
+    const zoneMessage = document.getElementById("message");
+    const chevreTete = document.getElementById("chevreTete");
+    const sonBeeh = document.getElementById("sonBeeh");
+
+    if (sonBeeh) {
+        sonBeeh.pause();
+        sonBeeh.currentTime = 0;
+        sonBeeh.play().catch(() => {});
+    }
+
+if (input === vraiMotDePasse) {
+    zoneMessage.textContent = "mot de passe exact";
+    chevreTete.src = "image/chevre/chevrebete.png";
+
+    const video = document.getElementById("videoChevre");
+    video.style.display = "block";
+    video.play();
+
+    video.onended = () => {
+        setTimeout(() => {
+            window.location.href = "sitetexhebdo.html";
+        }, 2000);
+    };
+
+    erreurs = 0;
+    return;
+}
+
+
+    if (erreurs >= 5) {
+        zoneMessage.textContent = "Il faut tout abandonner !";
+        chevreTete.src = "image/chevre/chevreenervee.png";
+        return;
+    }
+
+    zoneMessage.textContent = messages[erreurs] || "Toujours pas !";
+    chevreTete.src = images[erreurs] || "image/chevre/chevrebete.png";
+
+    erreurs++;
+}
+
+
+// Valider avec Entrée
+document.getElementById("password").addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        verifierMotDePasse();
+    }
+});
+
+// Affichage / masquage du mot de passe
+document.getElementById("toggleMdp").addEventListener("click", function () {
+    const champ = document.getElementById("password");
+
+    if (champ.type === "password") {
+        champ.type = "text";
+        this.textContent = "🙈";
+    } else {
+        champ.type = "password";
+        this.textContent = "👁️";
+    }
+});
+</script>
+
+<audio id="sonBeeh" src="son/bee.mp3"></audio>
+
+<video id="videoChevre" width="300" style="display:none;" preload="auto">
+    <source src="video/petite_chevre.mp4" type="video/mp4">
+</video>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
