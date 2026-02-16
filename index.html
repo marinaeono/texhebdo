@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion – Texhebdo</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+  <!-- TÊTE DE LA CHÈVRE -->
+  <div class="goat-head">
+    <img id="goatHead" src="chevre/chevre1.png" alt="Tête de chèvre">
+  </div>
+
+  <!-- BULLE + FLASH + POUSSIÈRE + CONFETTIS -->
+  <div id="speechBubble" class="speech-bubble"></div>
+  <div id="flash" class="flash-effect"></div>
+  <div id="dust" class="dust-effect"></div>
+  <div id="confetti" class="confetti-container"></div>
+
+  <!-- CONTAINER -->
+  <div class="login-box">
+
+    <h1>Bienvenue sur le site TEXHEBDO</h1>
+
+    <p class="subtitle">Saisir le mot de passe</p>
+
+    <form onsubmit="return checkPassword()">
+      <input type="password" id="password" placeholder="Mot de passe" required>
+      <button type="submit">Valider</button>
+    </form>
+
+    <p class="hint"></p>
+
+  </div>
+
+  <!-- SABOTS DE LA CHÈVRE -->
+  <div class="goat-feet">
+    <img id="goatFeet" src="chevre/sabots1.png" alt="Sabots de chèvre">
+  </div>
+
+<script>
+function checkPassword() {
+  const goodPassword = "gavrinis";
+  const input = document.getElementById("password").value;
+
+  const head = document.getElementById("goatHead");
+  const feet = document.getElementById("goatFeet");
+  const bubble = document.getElementById("speechBubble");
+  const flash = document.getElementById("flash");
+  const dust = document.getElementById("dust");
+
+  /* MOT DE PASSE CORRECT */
+  if (input === goodPassword) {
+    bubble.textContent = "Mot de passe correct !";
+    bubble.style.display = "block";
+
+    // Animation SKID + POP
+    bubble.classList.remove("pop");
+    void bubble.offsetWidth;
+    bubble.classList.add("pop");
+
+    // FLASH
+    flash.classList.remove("flashGo");
+    void flash.offsetWidth;
+    flash.classList.add("flashGo");
+
+    // POUSSIÈRE
+    dust.classList.remove("dustGo");
+    void dust.offsetWidth;
+    dust.classList.add("dustGo");
+
+    // CONFETTIS
+    launchConfetti();
+
+    // Attendre 2 secondes avant redirection
+    setTimeout(() => {
+      window.location.href = "accueil.html";
+    }, 2000);
+
+    return false;
+  }
+
+  /* MOT DE PASSE INCORRECT */
+  bubble.textContent = "Mauvais mot de passe !";
+  bubble.style.display = "block";
+
+  // Animation SKID + POP
+  bubble.classList.remove("pop");
+  void bubble.offsetWidth;
+  bubble.classList.add("pop");
+
+  // FLASH
+  flash.classList.remove("flashGo");
+  void flash.offsetWidth;
+  flash.classList.add("flashGo");
+
+  // POUSSIÈRE
+  dust.classList.remove("dustGo");
+  void dust.offsetWidth;
+  dust.classList.add("dustGo");
+
+  const total = 5;
+  const randomIndex = Math.floor(Math.random() * total) + 1;
+
+  head.src = "chevre/chevre" + randomIndex + ".png";
+  feet.src = "chevre/sabots" + randomIndex + ".png";
+
+  return false;
+}
+
+/* CONFETTIS */
+function launchConfetti() {
+  const container = document.getElementById("confetti");
+
+  for (let i = 0; i < 30; i++) {
+    const conf = document.createElement("div");
+    conf.classList.add("confetti");
+
+    const colors = ["red", "blue", "yellow", "green", "purple", "orange"];
+    conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    conf.style.left = Math.random() * window.innerWidth + "px";
+    conf.style.top = "80px";
+
+    conf.style.width = (6 + Math.random() * 8) + "px";
+    conf.style.height = (8 + Math.random() * 10) + "px";
+
+    container.appendChild(conf);
+
+    setTimeout(() => conf.remove(), 2000);
+  }
+}
+</script>
+
+</body>
+</html>
+
+
