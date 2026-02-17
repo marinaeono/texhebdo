@@ -40,6 +40,10 @@
   </div>
 
 <script>
+/* SONS */
+const soundError = new Audio("sons/beeh.mp3");
+const soundSuccess = new Audio("sons/super.mp3");
+
 function checkPassword() {
   const goodPassword = "gavrinis";
   const input = document.getElementById("password").value;
@@ -50,47 +54,88 @@ function checkPassword() {
   const flash = document.getElementById("flash");
   const dust = document.getElementById("dust");
 
+  /* LISTES DE MESSAGES */
+  const successMessages = [
+    "Mot de passe correct !",
+    "Bien joué !",
+    "Tu peux entrer.",
+    "Accès autorisé.",
+    "C’est le bon mot de passe !",
+    "La chèvre t’admire.",
+    "Tu es un génie du mot de passe."
+  ];
+
+  const errorMessages = [
+    "Mauvais mot de passe !",
+    "Essaie encore.",
+    "Non, ce n’est pas ça.",
+    "Ce n'est pas le bon mot de passe…",
+    "Mot de passe incorrect.",
+    "La chèvre te juge car ce n'est pas le bon mot passe.",
+    "Hmm… tu peux mieux faire."
+  ];
+
   /* MOT DE PASSE CORRECT */
   if (input === goodPassword) {
 
-    // On force la chèvre heureuse (chevre1 + sabots1)
+    // Son de réussite
+    soundSuccess.currentTime = 0;
+    soundSuccess.play();
+
+    // Message aléatoire
+    bubble.textContent = successMessages[Math.floor(Math.random() * successMessages.length)];
+
+    // Styles de bulles aléatoires
+    const bubbleStyles = ["bubble1", "bubble2", "bubble3"];
+    bubble.classList.remove("bubble1", "bubble2", "bubble3");
+    const randomBubble = bubbleStyles[Math.floor(Math.random() * bubbleStyles.length)];
+    bubble.classList.add(randomBubble);
+
+    // Bulle plus grande
+    bubble.classList.add("bigBubble");
+
+    bubble.style.display = "block";
+
+    // Chèvre heureuse
     head.src = "chevre/chevre1.png";
     feet.src = "chevre/sabots1.png";
 
-    bubble.textContent = "Mot de passe correct !";
-    bubble.style.display = "block";
+    // Animation rigolote : la chèvre saute
+    head.classList.add("goatJump");
+    feet.classList.add("goatJump");
 
-    // Animation SKID + POP
+    // Animations existantes
     bubble.classList.remove("pop");
     void bubble.offsetWidth;
     bubble.classList.add("pop");
 
-    // FLASH
     flash.classList.remove("flashGo");
     void flash.offsetWidth;
     flash.classList.add("flashGo");
 
-    // POUSSIÈRE
     dust.classList.remove("dustGo");
     void dust.offsetWidth;
     dust.classList.add("dustGo");
 
-    // FEUX D’ARTIFICE (3 tirs espacés)
-    launchFirework();
-    setTimeout(launchFirework, 400);
-    setTimeout(launchFirework, 800);
-
-    // Redirection après 3 secondes (pour laisser voir les feux)
+    // Redirection après 5 secondes
     setTimeout(() => {
       window.location.href = "accueil.html";
-    }, 3000);
+    }, 5000);
 
     return false;
   }
 
   /* MOT DE PASSE INCORRECT */
-  bubble.textContent = "Mauvais mot de passe !";
+
+  // Son d’erreur
+  soundError.currentTime = 0;
+  soundError.play();
+
+  bubble.textContent = errorMessages[Math.floor(Math.random() * errorMessages.length)];
   bubble.style.display = "block";
+
+  // Retirer la bulle géante si elle était active
+  bubble.classList.remove("bigBubble");
 
   bubble.classList.remove("pop");
   void bubble.offsetWidth;
@@ -104,6 +149,7 @@ function checkPassword() {
   void dust.offsetWidth;
   dust.classList.add("dustGo");
 
+  // Chèvre aléatoire (1 à 5)
   const total = 5;
   const randomIndex = Math.floor(Math.random() * total) + 1;
 
@@ -112,17 +158,7 @@ function checkPassword() {
 
   return false;
 }
-
-/* FEU D’ARTIFICE */
-function launchFirework() {
-  const fw = document.createElement("div");
-  fw.classList.add("firework");
-  document.body.appendChild(fw);
-
-  setTimeout(() => fw.remove(), 1500);
-}
 </script>
 
 </body>
 </html>
-
