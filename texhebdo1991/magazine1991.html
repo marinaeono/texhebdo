@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Magazine TEXHEBDO 1991</title>
+
+<!-- POLICES IDENTIQUES À L’ACCUEIL -->
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+<!-- CSS UNIVERSEL POUR TOUS LES MAGAZINES -->
+<link rel="stylesheet" href="magazine.css">
+</head>
+
+<body>
+
+<!-- ============================================================
+     TITRES (toujours visibles au-dessus du livre)
+     ============================================================ -->
+<h1 class="titre-magazine">TEX<span class="special-h">H</span>EBDO 1991</h1>
+<p class="sous-titre">Le premier magazine de 1991</p>
+<p class="notice">cliquer sur les pages pour ouvrir le magazine</p>
+
+<!-- ============================================================
+     BOUTONS MODERNES (Retour / Plein écran / Mode lecture mobile)
+     ============================================================ -->
+<a href="../accueil.html" class="retour-accueil-icon bouton-style">⟵ Retour</a>
+<button class="fullscreen-btn bouton-style" id="fullscreenBtn">⛶ Plein écran</button>
+<button class="lecture-btn bouton-style" id="lectureBtn">📖 Mode lecture</button>
+
+<!-- ============================================================
+     FLÈCHES DE NAVIGATION
+     ============================================================ -->
+<div class="arrow arrow-left" id="arrowLeft">&#10094;</div>
+<div class="arrow arrow-right" id="arrowRight">&#10095;</div>
+
+<!-- ============================================================
+     MUSIQUE DE FOND
+     ============================================================ -->
+<audio id="musique" src="../son/libredroit.mp3"></audio>
+<script>
+window.addEventListener("load", () => {
+    document.getElementById("musique").play();
+});
+</script>
+
+<!-- ============================================================
+     LIVRE (structure principale)
+     ============================================================ -->
+<div class="book">
+
+  <!-- Double page visible -->
+  <div class="spread" id="spread">
+    <div class="page left" id="leftPage"></div>
+    <div class="page right" id="rightPage"></div>
+  </div>
+
+  <!-- Page fantôme utilisée pour l’animation -->
+  <div class="ghostPage" id="ghostPage">
+    <div class="shadow"></div>
+  </div>
+
+  <!-- Buffer pour précharger les pages suivantes -->
+  <div class="buffer" id="buffer"></div>
+
+</div>
+
+<!-- ============================================================
+     SCRIPT PRINCIPAL DU MAGAZINE
+     ============================================================ -->
+<script>
+/* --- COUVERTURE --- */
+const cover = "pages/1991couverture.jpg";
+
+/* --- PAGES INTERNES --- */
+const pages = [
+  "pages/1991page2.jpg",
+  "pages/1991page3.jpg",
+  "pages/1991page4.jpg",
+  "pages/1991page5.jpg",
+  "pages/1991page6.jpg",
+  "pages/1991page7.jpg",
+];
+
+/* Création automatique des double-pages */
+const spreads = [];
+for (let i = 0; i < pages.length; i += 2) {
+  if (pages[i + 1]) spreads.push([pages[i], pages[i + 1]]);
+}
+
+/* Préchargement des images */
+[cover, ...pages].forEach(src => { const img = new Image(); img.src = src; });
+
+/* Variables globales */
+let currentSpread = 0;
+
+const spread = document.getElementById("spread");
+const leftPage = document.getElementById("leftPage");
+const rightPage = document.getElementById("rightPage");
+const ghost = document.getElementById("ghostPage");
+const ghostShadow = ghost.querySelector(".shadow");
+const buffer = document.getElementById("buffer");
+
+/* ============================================================
+     AFFICHAGE DES PAGES
+     ============================================================ */
+function showSpread(index) {
+  if (index === 0) {
+    leftPage.style.backgroundImage = "none";
+    rightPage.style.backgroundImage = `url(${cover})`;
+    return;
+  }
+
+  const spreadData = spreads[index - 1];
+  leftPage.style.backgroundImage = `url(${spreadData[0]})`;
+  rightPage.style.backgroundImage = `url(${spreadData[1]})`;
+}
+
+showSpread(0);
+
+/* ============================================================
+     ANIMATIONS DE COUVERTURE
+     ============================================================ */
+function playCoverOpening() {
+  ghost.style.backgroundImage = `url(${cover})`;
+  ghost.style.opacity = 1;
+  ghost.classList.add("coverOpening");
+
+  setTimeout(() => {
+    ghost.classList.remove("coverOpening");
+    ghost.style.opacity = 0;
+  }, 1000);
+}
+
+function playCoverClosing() {
+  ghost.style.backgroundImage = rightPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+  ghost.classList.add("coverClosing");
+
+  setTimeout(() => {
+    ghost.classList.remove("coverClosing");
+    ghost.style.opacity = 0;
+  }, 1000);
+}
+
+/* Préchargement de la page suivante */
+function prerenderSpread(index) {
+  if (index >= 1 && index <= spreads.length) {
+    const nextSpread = spreads[index - 1];
+    buffer.style.backgroundImage = `url(${nextSpread[1]})`;
+  }
+}
+
+prerenderSpread(1);
+
+/* ============================================================
+     AVANCER DANS LE MAGAZINE
+     ============================================================ */
+rightPage.addEventListener("click", () => {
+
+  if (currentSpread === 0) {
+    playCoverOpening();
+    setTimeout(() => {
+      currentSpread = 1;
+      showSpread(1);
+      prerenderSpread(2);
+    }, 500);
+    return;
+  }
+
+  if (currentSpread === spreads.length) {
+    playCoverClosing();
+    setTimeout(() => {
+      currentSpread = 0;
+      showSpread(0);
+    }, 500);
+    return;
+  }
+
+  ghost.style.backgroundImage = rightPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+
+  ghost.classList.add("turningGhost");
+  ghostShadow.classList.add("shadowActive");
+
+  setTimeout(() => {
+    currentSpread++;
+    showSpread(currentSpread);
+    prerenderSpread(currentSpread + 1);
+  }, 400);
+
+  setTimeout(() => {
+    ghost.classList.remove("turningGhost");
+    ghostShadow.classList.remove("shadowActive");
+    ghost.style.opacity = 0;
+  }, 800);
+});
+
+/* ============================================================
+     RECULER DANS LE MAGAZINE
+     ============================================================ */
+leftPage.addEventListener("click", () => {
+
+  if (currentSpread === 1) {
+    playCoverClosing();
+    setTimeout(() => {
+      currentSpread = 0;
+      showSpread(0);
+    }, 500);
+    return;
+  }
+
+  if (currentSpread === 0) return;
+
+  ghost.style.backgroundImage = leftPage.style.backgroundImage;
+  ghost.style.opacity = 1;
+
+  ghost.classList.add("turningGhostReverse");
+  ghostShadow.classList.add("shadowActive");
+
+  setTimeout(() => {
+    currentSpread--;
+    showSpread(currentSpread);
+    prerenderSpread(currentSpread - 1);
+  }, 400);
+
+  setTimeout(() => {
+    ghost.classList.remove("turningGhostReverse");
+    ghostShadow.classList.remove("shadowActive");
+    ghost.style.opacity = 0;
+  }, 800);
+});
+
+/* ============================================================
+     FLÈCHES = CLIC SUR LES PAGES
+     ============================================================ */
+document.getElementById("arrowRight").addEventListener("click", () => {
+    rightPage.click();
+});
+
+document.getElementById("arrowLeft").addEventListener("click", () => {
+    leftPage.click();
+});
+
+/* ============================================================
+     MODE PLEIN ÉCRAN
+     ============================================================ */
+const fsBtn = document.getElementById("fullscreenBtn");
+
+fsBtn.addEventListener("click", () => {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+        fsBtn.textContent = "Quitter plein écran";
+    } else {
+        document.exitFullscreen();
+        fsBtn.textContent = "⛶ Plein écran";
+    }
+});
+
+/* ============================================================
+     MODE LECTURE SPÉCIAL MOBILE
+     ============================================================ */
+const lectureBtn = document.getElementById("lectureBtn");
+
+lectureBtn.addEventListener("click", () => {
+    document.body.classList.toggle("mobile-reading-mode");
+
+    if (document.body.classList.contains("mobile-reading-mode")) {
+        lectureBtn.textContent = "❌ Quitter lecture";
+    } else {
+        lectureBtn.textContent = "📖 Mode lecture";
+    }
+});
+</script>
+
+</body>
+</html>
+
