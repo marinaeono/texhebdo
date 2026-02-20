@@ -1,0 +1,319 @@
+/* ============================================================
+   1) TITRE PRINCIPAL + SOUS-TITRES
+   ============================================================ */
+
+.titre-magazine {
+  font-family: 'League Gothic', sans-serif;
+  font-size: 70px;
+  letter-spacing: 2px;
+  color: black;
+  text-align: center;
+  margin-top: 20px; /* Remonté */
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px white;
+  position: relative;
+  z-index: 1000000;
+}
+
+.titre-magazine .special-h {
+  font-family: 'Lobster', cursive;
+  font-size: 90px;
+  color: black;
+  text-shadow: 2px 2px 4px white;
+}
+
+.sous-titre {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: black;
+  text-align: center;
+  margin-top: -10px;
+  margin-bottom: 5px;
+  text-shadow: 2px 2px 4px white;
+  position: relative;
+  z-index: 1000000;
+}
+
+.notice {
+  font-size: 16px;
+  color: black;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0.8;
+  position: relative;
+  z-index: 1000000;
+}
+
+/* ============================================================
+   2) BOUTONS MODERNES (Retour + Plein écran + Lecture mobile)
+   ============================================================ */
+
+.bouton-style {
+  position: fixed;
+  padding: 12px 22px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  z-index: 999999;
+  background: rgba(255, 255, 255, 0.85);
+  color: #222;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  backdrop-filter: blur(6px);
+  transition: 0.2s;
+}
+
+.bouton-style:hover {
+  transform: scale(1.08);
+  background: white;
+}
+
+/* Bouton retour */
+.retour-accueil-icon {
+  top: 20px;
+  left: 20px;
+}
+
+/* Bouton plein écran */
+.fullscreen-btn {
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Bouton mode lecture (mobile uniquement) */
+.lecture-btn {
+  bottom: 80px;
+  right: 20px;
+}
+
+/* Masqué sur ordinateur */
+@media (min-width: 601px) {
+  .lecture-btn {
+    display: none;
+  }
+}
+
+/* ============================================================
+   3) FOND DE PAGE
+   ============================================================ */
+
+body {
+  margin: 0;
+  background: url("../image/prairie.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 20px;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   4) LIVRE (version ordinateur)
+   ============================================================ */
+
+.book {
+  width: 800px;
+  height: 550px;
+  position: relative;
+  perspective: 2000px;
+  transform: scale(1.25) translateX(-10px); /* Réduit + recentré */
+  transform-origin: center;
+  margin-top: 60px; /* Remonté */
+}
+
+.spread {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page {
+  width: 350px;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+/* ============================================================
+   5) PAGE FANTÔME (animation de tournage)
+   ============================================================ */
+
+.ghostPage {
+  position: absolute;
+  width: 350px;
+  height: 500px;
+  left: 400px;
+  top: 25px;
+  transform-origin: left;
+  opacity: 0;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.ghostPage .shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0,0,0,0.25), transparent);
+  opacity: 0;
+}
+
+/* ============================================================
+   6) ANIMATIONS DE TOURNAGE DE PAGE
+   ============================================================ */
+
+.turningGhost {
+  animation: turnPage 0.8s ease forwards;
+}
+
+@keyframes turnPage {
+  0%   { transform: rotateY(0deg) scale(1); opacity: 1; }
+  40%  { transform: rotateY(-60deg) scale(0.98); }
+  70%  { transform: rotateY(-110deg) scale(0.96); }
+  100% { transform: rotateY(-180deg) scale(0.95); opacity: 0; }
+}
+
+.turningGhostReverse {
+  animation: turnPageReverse 0.8s ease forwards;
+}
+
+@keyframes turnPageReverse {
+  0%   { transform: rotateY(-180deg) scale(0.95); opacity: 1; }
+  40%  { transform: rotateY(-110deg) scale(0.96); }
+  70%  { transform: rotateY(-60deg) scale(0.98); }
+  100% { transform: rotateY(0deg) scale(1); opacity: 0; }
+}
+
+/* ============================================================
+   7) FLÈCHES DE NAVIGATION
+   ============================================================ */
+
+.arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 60px;
+  color: white;
+  text-shadow: 3px 3px 6px black;
+  cursor: pointer;
+  z-index: 99999;
+  user-select: none;
+  transition: transform 0.2s;
+}
+
+.arrow:hover {
+  transform: translateY(-50%) scale(1.2);
+}
+
+.arrow-left {
+  left: 5vw;
+}
+
+.arrow-right {
+  right: 5vw;
+}
+
+/* ============================================================
+   8) MODE LECTURE SPÉCIAL SMARTPHONE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+  body.mobile-reading-mode {
+    background: #000000cc;
+    padding-top: 10px;
+  }
+
+  body.mobile-reading-mode .titre-magazine,
+  body.mobile-reading-mode .sous-titre,
+  body.mobile-reading-mode .notice,
+  body.mobile-reading-mode .bouton-style,
+  body.mobile-reading-mode .arrow {
+    display: none;
+  }
+
+  body.mobile-reading-mode .book {
+    transform: scale(1);
+    width: 95vw;
+    margin-top: 10px;
+  }
+
+  body.mobile-reading-mode .page,
+  body.mobile-reading-mode .ghostPage {
+    width: 47vw;
+    height: calc(47vw * 1.4);
+  }
+
+  body.mobile-reading-mode .ghostPage {
+    left: 47vw;
+  }
+}
+
+/* ============================================================
+   9) RESPONSIVE TABLETTE + MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+  .titre-magazine { font-size: 45px; }
+  .titre-magazine .special-h { font-size: 60px; }
+  .sous-titre { font-size: 20px; }
+  .notice { font-size: 14px; }
+
+  .book {
+    transform: scale(0.9);
+    margin-top: 20px;
+  }
+
+  .page,
+  .ghostPage {
+    width: 45vw;
+    height: calc(45vw * 1.4);
+  }
+
+  .ghostPage { left: 45vw; top: 0; }
+
+  .arrow { font-size: 40px; }
+  .arrow-left { left: 3vw; }
+  .arrow-right { right: 3vw; }
+
+  .bouton-style {
+    font-size: 15px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .titre-magazine { font-size: 32px; }
+  .titre-magazine .special-h { font-size: 46px; }
+  .sous-titre { font-size: 16px; }
+  .notice { font-size: 12px; }
+
+  .arrow { font-size: 28px; }
+
+  .book {
+    transform: scale(0.65); /* encore plus petit */
+    margin-top: 10px;       /* remonte le livre */
+  }
+
+  .page,
+  .ghostPage {
+    width: 42vw;
+    height: calc(42vw * 1.4);
+  }
+
+  .ghostPage { left: 42vw; }
+}
