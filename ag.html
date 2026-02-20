@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Jeu d'anniversaire</title>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        background: #f7e9ff;
+        font-family: Arial, sans-serif;
+    }
+    #zoneJeu {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    }
+    .ballon {
+        position: absolute;
+        width: 60px;
+        height: 80px;
+        background: radial-gradient(circle at 30% 30%, #ff4d6d, #c9184a);
+        border-radius: 50% 50% 45% 45%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    #messageFinal, #frotte {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        display: none;
+    }
+    #frotte {
+        font-size: 2rem;
+        background: white;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    #messageFinal {
+        font-size: 3rem;
+        color: #c9184a;
+        font-weight: bold;
+        animation: boom 0.6s ease-out forwards;
+    }
+    @keyframes boom {
+        0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="zoneJeu"></div>
+<div id="frotte">Pose ton téléphone ici et frotte doucement…</div>
+<div id="messageFinal">🎉 JOYEUX ANNIVERSAIRE ANNE‑GAËLLE ! 🎂</div>
+
+<script>
+let zone = document.getElementById("zoneJeu");
+let frotte = document.getElementById("frotte");
+let messageFinal = document.getElementById("messageFinal");
+let ballonsRestants = 5;
+
+// Création des ballons
+for (let i = 0; i < ballonsRestants; i++) {
+    creerBallon();
+}
+
+function creerBallon() {
+    let b = document.createElement("div");
+    b.classList.add("ballon");
+    b.style.left = Math.random() * (window.innerWidth - 60) + "px";
+    b.style.top = window.innerHeight + "px";
+
+    zone.appendChild(b);
+
+    // Animation vers le haut
+    let vitesse = 1 + Math.random() * 2;
+    function monter() {
+        let y = parseFloat(b.style.top);
+        b.style.top = (y - vitesse) + "px";
+
+        if (y < -100) {
+            b.remove();
+            creerBallon();
+        } else {
+            requestAnimationFrame(monter);
+        }
+    }
+    monter();
+
+    // Explosion du ballon
+    b.addEventListener("click", () => {
+        b.remove();
+        ballonsRestants--;
+
+        if (ballonsRestants === 0) {
+            setTimeout(() => {
+                frotte.style.display = "block";
+                setTimeout(() => {
+                    frotte.style.display = "none";
+                    messageFinal.style.display = "block";
+                    lancerConfettis();
+                }, 4000);
+            }, 500);
+        }
+    });
+}
+
+// Confettis
+function lancerConfettis() {
+    for (let i = 0; i < 150; i++) {
+        let conf = document.createElement("div");
+        conf.style.position = "fixed";
+        conf.style.width = "8px";
+        conf.style.height = "8px";
+        conf.style.background = "hsl(" + Math.random()*360 + ", 80%, 60%)";
+        conf.style.left = Math.random()*100 + "vw";
+        conf.style.top = "-10px";
+        conf.style.opacity = 0.9;
+        conf.style.transform = "rotate(" + Math.random()*360 + "deg)";
+        document.body.appendChild(conf);
+
+        let vitesse = 2 + Math.random()*4;
+        function tomber() {
+            let y = parseFloat(conf.style.top);
+            conf.style.top = (y + vitesse) + "px";
+
+            if (y > window.innerHeight) {
+                conf.remove();
+            } else {
+                requestAnimationFrame(tomber);
+            }
+        }
+        tomber();
+    }
+}
+</script>
+
+</body>
+</html>
+
