@@ -1,0 +1,183 @@
+/* FOND DE PAGE */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: rgb(210, 212, 194); /* jaune-vert autour du conteneur */
+}
+
+
+.welcome-block {
+  text-align: center;
+  margin-top: 120px; /* espace sous la tête de chèvre */
+  margin-bottom: 20px;
+}
+
+.welcome-title {
+  font-size: 2.2rem;
+  font-family: "League Gothic", sans-serif;
+  margin: 0;
+  color: black;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.35);
+}
+
+.welcome-tex {
+  font-size: 4rem;
+  font-family: "League Gothic", sans-serif;
+  margin: 0;
+  color: black;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.35);
+}
+
+
+.welcome-logo {
+  width: 400px;          /* ajuste la taille selon ton logo */
+  max-width: 80%;        /* évite que ça déborde sur mobile */
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.goat-speech {
+  position: absolute;
+  bottom: 40px;           /* place la bulle vers le bas */
+  left: 350px;             /* collée à gauche */
+  background: white;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 10px 15px;
+  font-size: 1.1em;
+  font-weight: bold;
+  max-width: 260px;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+/* Flèche vers la gauche */
+.goat-speech::after {
+  content: "";
+  position: absolute;
+  bottom: 15px;           /* alignée verticalement avec la bouche */
+  left: -15px;            /* flèche à gauche */
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 15px solid white;
+  filter: drop-shadow(-2px 0 0 black);
+}
+
+
+@media (max-width: 480px) {
+  .goat-speech {
+    max-width: 300px;
+    font-size: 0.95em;
+    bottom: 30px;
+  }
+}
+
+
+
+
+
+/* CONTAINER */
+.login-box {
+  position: relative;
+  width: 80%;
+  min-height: 420px;
+  max-width: 650px;
+  margin: 60px auto 0 auto; /* remonte le conteneur */
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  text-align: center;
+  overflow: hidden;
+  background: transparent;
+  z-index: 5;
+}
+
+
+/* VIDÉO DE FOND */
+.goat-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 1;
+}
+
+/* FORMULAIRE */
+.login-box input[type="password"],
+.login-box button {
+  width: 70%;
+  height: 50px;
+  display: block;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin:0 auto 20px auto;
+}
+
+
+.login-box button {
+  background-color: #2ecc71; /* vert */
+  color: white;              /* texte blanc */
+  border: none;              /* optionnel : enlève la bordure */
+  cursor: pointer;           /* curseur main */
+  font-weight: bold;         /* optionnel : texte plus visible */
+}
+
+.login-box button:hover {
+  background-color: #27ae60; /* vert plus foncé au survol */
+}
+
+
+
+/* TÊTE */
+.goat-head {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  z-index: 1;
+}
+
+.goat-head img {
+  width: 100%;
+}
+
+/* SABOTS */
+.goat-feet {
+  position: absolute;
+  top: 160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110px;
+  z-index: 20;
+}
+
+.goat-feet img {
+  width: 100%;
+}
+
+.speech-bubble {
+  position: absolute;
+  top: 40px;
+  left: calc(50% + 200px);
+  max-width: 250px;
+  padding: 12px 18px;
+  background: white;
+  border: 3px solid black;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-weight: bold;
+  display: none;
+  z-index: 3;
+}
+
+/* FLASH + POUSSIÈRE (inchangés) */
+.flash-effect, .dust-effect { pointer-events: none; }
